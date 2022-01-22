@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  libreddit:
+    container_name: "libreddit"
+    image: spikecodes/libreddit
+    ports:
+      - "8080:8080"
+    user: "1000:1000"
+    restart: unless-stopped
