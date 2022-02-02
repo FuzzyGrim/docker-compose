@@ -26,5 +26,6 @@ Services:
     - Promtail
 - Navidrome
 - Nextcloud
+- Traefik
 - Vaultwarden
 - Watchtower
