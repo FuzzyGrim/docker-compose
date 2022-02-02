@@ -18,6 +18,21 @@ services:
     restart: unless-stopped
     depends_on:
       - bookstack_db
+    networks:
+      - proxy
+      - default
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.bookstack.entrypoints=http"
+      - "traefik.http.routers.bookstack.rule=Host(`bookstack.fuzzylab.xyz`)"
+      - "traefik.http.middlewares.bookstack-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.bookstack.middlewares=bookstack-https-redirect"
+      - "traefik.http.routers.bookstack-secure.entrypoints=https"
+      - "traefik.http.routers.bookstack-secure.rule=Host(`bookstack.fuzzylab.xyz`)"
+      - "traefik.http.routers.bookstack-secure.tls=true"
+      - "traefik.http.routers.bookstack-secure.service=bookstack"
+      - "traefik.http.services.bookstack.loadbalancer.server.port=80"
+      - "traefik.docker.network=proxy"
   bookstack_db:
     image: lscr.io/linuxserver/mariadb
     container_name: bookstack_db
@@ -32,3 +47,8 @@ services:
     volumes:
       - /data/bookstack/database/config:/config
     restart: unless-stopped
+    networks:
+      - default
+networks:
+  proxy:
+    external: true
