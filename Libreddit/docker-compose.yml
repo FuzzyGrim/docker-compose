@@ -4,7 +4,23 @@ services:
   libreddit:
     container_name: "libreddit"
     image: spikecodes/libreddit
-    ports:
-      - "8080:8080"
     user: "1000:1000"
     restart: unless-stopped
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.libreddit.entrypoints=http"
+      - "traefik.http.routers.libreddit.rule=Host(`libreddit.fuzzylab.xyz`)"
+      - "traefik.http.middlewares.libreddit-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.libreddit.middlewares=libreddit-https-redirect"
+      - "traefik.http.routers.libreddit-secure.entrypoints=https"
+      - "traefik.http.routers.libreddit-secure.rule=Host(`libreddit.fuzzylab.xyz`)"
+      - "traefik.http.routers.libreddit-secure.tls=true"
+      - "traefik.http.routers.libreddit-secure.service=libreddit"
+      - "traefik.http.services.libreddit.loadbalancer.server.port=8080"
+      - "traefik.docker.network=proxy"
+
+networks:
+  proxy:
+    external: true
