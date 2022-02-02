@@ -9,6 +9,26 @@ services:
       - TZ=Europe/Madrid
     volumes:
       - /data/freshrss:/config
+    networks:
+      - proxy
     ports:
       - 8080:80
     restart: unless-stopped
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.freshrss.entrypoints=http"
+      - "traefik.http.routers.freshrss.rule=Host(`freshrss.domain.com`)"
+      - "traefik.http.middlewares.freshrss-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.freshrss.middlewares=freshrss-https-redirect"
+      - "traefik.http.routers.freshrss-secure.entrypoints=https"
+      - "traefik.http.routers.freshrss-secure.rule=Host(`freshrss.domain.com`)"
+      - "traefik.http.routers.freshrss-secure.tls=true"
+      - "traefik.http.routers.freshrss-secure.service=freshrss"
+      - "traefik.http.services.freshrss.loadbalancer.server.port=80"
+      - "traefik.docker.network=proxy"
+
+networks:
+  proxy:
+    external: true
