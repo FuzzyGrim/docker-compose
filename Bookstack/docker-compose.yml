@@ -13,8 +13,6 @@ services:
       - DB_DATABASE=bookstackapp
     volumes:
       - /data/bookstack/config:/config
-    ports:
-      - 6875:80
     restart: unless-stopped
     depends_on:
       - bookstack_db
