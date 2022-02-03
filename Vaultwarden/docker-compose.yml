@@ -11,6 +11,8 @@ services:
       - ./vw-data:/data
     ports:
       - 8086:80
+    environment:
+      - SIGNUPS_ALLOWED=false
     networks:
       - proxy
     labels:
