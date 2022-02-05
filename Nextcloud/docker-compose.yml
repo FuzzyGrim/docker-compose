@@ -11,11 +11,27 @@ services:
     volumes:
       - /data/nextcloud/config:/config
       - /data/nextcloud:/data
-    ports:
-      - 9443:443
     restart: unless-stopped
     depends_on:
       - db
+    networks:
+      - proxy
+      - default
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nextcloud.entrypoints=http"
+      - "traefik.http.routers.nextcloud.rule=Host(`nextcloud.domain.com`)"
+      - "traefik.http.middlewares.nextcloud-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.nextcloud.middlewares=nextcloud-https-redirect"
+      - "traefik.http.routers.nextcloud-secure.entrypoints=https"
+      - "traefik.http.routers.nextcloud-secure.rule=Host(`nextcloud.domain.com`)"
+      - "traefik.http.routers.nextcloud-secure.tls=true"
+      - "traefik.http.routers.nextcloud-secure.service=nextcloud"
+      - "traefik.http.services.nextcloud.loadbalancer.server.port=80"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.middlewares.nextcloud-dav.redirectregex.regex=https://(.*)/.well-known/(card|cal)dav"
+      - "traefik.http.middlewares.nextcloud-dav.redirectregex.replacement=https://$$1/remote.php/dav/"
+      - "traefik.http.middlewares.nextcloud-dav.redirectregex.permanent=true"
 
   db:
     image: linuxserver/mariadb:latest
@@ -31,3 +47,8 @@ services:
     volumes:
       - /data/nextcloud/config_db:/config
     restart: unless-stopped
+    networks:
+      - default
+networks:
+  proxy:
+    external: true
