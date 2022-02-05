@@ -9,8 +9,6 @@ services:
       - WEBSOCKET_ENABLED=true  # Enable WebSocket notifications.
     volumes:
       - ./vw-data:/data
-    ports:
-      - 8086:80
     environment:
       - SIGNUPS_ALLOWED=false
     networks:
