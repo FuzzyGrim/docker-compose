@@ -4,7 +4,7 @@ services:
     image: postgres:10
     restart: always
     networks:
-      - invidious
+      - default
     volumes:
       - postgresdata:/var/lib/postgresql/data
       - ./config/sql:/config/sql
@@ -12,18 +12,17 @@ services:
     environment:
       POSTGRES_DB: invidious
       POSTGRES_USER: kemal
-      POSTGRES_PASSWORD: ${DB_PW}
+      POSTGRES_PASSWORD: ${PASS}
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
   invidious:
     image: quay.io/invidious/invidious:latest
     restart: always
     networks:
-      - invidious
+      - default
+      - proxy
     mem_limit: 1024M
     cpus: 0.5
-    ports:
-      - "3000:3000"
     environment:
       INVIDIOUS_CONFIG: |
         channel_threads: 1
@@ -32,12 +31,14 @@ services:
         db:
           dbname: invidious
           user: kemal
-          password: kemal
+          password: ${PASS}
           host: postgres
           port: 5432
         full_refresh: false
-        https_only: false
-        domain:
+        https_only: true
+        domain: ${URL}
+        admins:
+          - invidious
       # external_port:
     healthcheck:
       test: wget -nv --tries=1 --spider http://127.0.0.1:3000/api/v1/comments/jNQXAC9IVRw || exit 1
@@ -46,6 +47,18 @@ services:
       retries: 2
     depends_on:
       - postgres
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.invidious.entrypoints=http"
+      - "traefik.http.routers.invidious.rule=Host(`invidious.fuzzylab.xyz`)"
+      - "traefik.http.middlewares.invidious-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.invidious.middlewares=invidious-https-redirect"
+      - "traefik.http.routers.invidious-secure.entrypoints=https"
+      - "traefik.http.routers.invidious-secure.rule=Host(`invidious.fuzzylab.xyz`)"
+      - "traefik.http.routers.invidious-secure.tls=true"
+      - "traefik.http.routers.invidious-secure.service=invidious"
+      - "traefik.http.services.invidious.loadbalancer.server.port=3000"
+      - "traefik.docker.network=proxy"
   autoheal:
     restart: always
     image: willfarrell/autoheal
@@ -58,4 +71,5 @@ volumes:
   postgresdata:
 
 networks:
-  invidious:
+  proxy:
+    external: true
