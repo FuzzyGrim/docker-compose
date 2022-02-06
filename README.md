@@ -5,6 +5,7 @@ Services:
 - Bookstack
 - Caddy
 - Code-Server
+- Dashy
 - Duplicati
 - FreshRSS
 - Invidious
