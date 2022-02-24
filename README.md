@@ -7,6 +7,7 @@ Services:
 - Code-Server
 - Dashy
 - Duplicati
+- Fail2ban
 - FreshRSS
 - Invidious
 - Libreddit
