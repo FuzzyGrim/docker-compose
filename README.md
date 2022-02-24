@@ -2,6 +2,7 @@
 
 Services:
 
+- Authelia
 - Bookstack
 - Caddy
 - Code-Server
