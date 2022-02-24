@@ -22,11 +22,11 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.bookstack.entrypoints=http"
-      - "traefik.http.routers.bookstack.rule=Host(`bookstack.fuzzylab.xyz`)"
+      - "traefik.http.routers.bookstack.rule=Host(`bookstack.domain.com`)"
       - "traefik.http.middlewares.bookstack-https-redirect.redirectscheme.scheme=https"
       - "traefik.http.routers.bookstack.middlewares=bookstack-https-redirect"
       - "traefik.http.routers.bookstack-secure.entrypoints=https"
-      - "traefik.http.routers.bookstack-secure.rule=Host(`bookstack.fuzzylab.xyz`)"
+      - "traefik.http.routers.bookstack-secure.rule=Host(`bookstack.domain.com`)"
       - "traefik.http.routers.bookstack-secure.tls=true"
       - "traefik.http.routers.bookstack-secure.service=bookstack"
       - "traefik.http.services.bookstack.loadbalancer.server.port=80"

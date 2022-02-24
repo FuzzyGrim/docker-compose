@@ -11,11 +11,11 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.libreddit.entrypoints=http"
-      - "traefik.http.routers.libreddit.rule=Host(`libreddit.fuzzylab.xyz`)"
+      - "traefik.http.routers.libreddit.rule=Host(`libreddit.domain.com`)"
       - "traefik.http.middlewares.libreddit-https-redirect.redirectscheme.scheme=https"
       - "traefik.http.routers.libreddit.middlewares=libreddit-https-redirect"
       - "traefik.http.routers.libreddit-secure.entrypoints=https"
-      - "traefik.http.routers.libreddit-secure.rule=Host(`libreddit.fuzzylab.xyz`)"
+      - "traefik.http.routers.libreddit-secure.rule=Host(`libreddit.domain.com`)"
       - "traefik.http.routers.libreddit-secure.tls=true"
       - "traefik.http.routers.libreddit-secure.service=libreddit"
       - "traefik.http.services.libreddit.loadbalancer.server.port=8080"
