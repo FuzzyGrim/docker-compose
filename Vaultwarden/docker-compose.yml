@@ -8,9 +8,12 @@ services:
     environment:
       - WEBSOCKET_ENABLED=true  # Enable WebSocket notifications.
     volumes:
-      - ./vw-data:/data
+      - /data/vaultwarden:/data
     environment:
       - SIGNUPS_ALLOWED=false
+      - IP_HEADER=CF-Connecting-IP
+      - LOG_FILE=/data/vaultwarden.log
+      - LOG_LEVEL=warn
     networks:
       - proxy
     labels:
