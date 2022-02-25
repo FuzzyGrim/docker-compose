@@ -13,4 +13,4 @@ services:
       WATCHTOWER_CLEANUP: "true"
       WATCHTOWER_NO_STARTUP_MESSAGE: "true"
       WATCHTOWER_NOTIFICATIONS: "shoutrrr"
-      WATCHTOWER_NOTIFICATION_URL: "discord://token@channel"
+      WATCHTOWER_NOTIFICATION_URL: "discord://token@channel?SplitLines=no"
