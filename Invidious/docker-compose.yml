@@ -41,6 +41,7 @@ services:
       - "traefik.http.routers.invidious-secure.service=invidious"
       - "traefik.http.services.invidious.loadbalancer.server.port=3000"
       - "traefik.docker.network=proxy"
+      - "traefik.http.routers.invidious-secure.middlewares=authelia@docker"
 
   invidious-db:
     image: docker.io/library/postgres:14
