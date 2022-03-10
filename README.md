@@ -9,6 +9,7 @@ Services:
 - Dashy
 - Duplicati
 - Fail2ban
+- FileBrowser
 - FreshRSS
 - Invidious
 - Libreddit
@@ -29,6 +30,9 @@ Services:
     - Promtail
 - Navidrome
 - Nextcloud
+- Piped
+- Send
 - Traefik
 - Vaultwarden
 - Watchtower
+- Wallabag
