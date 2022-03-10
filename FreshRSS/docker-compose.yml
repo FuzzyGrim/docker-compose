@@ -9,8 +9,6 @@ services:
       - TZ=Europe/Madrid
     volumes:
       - /data/freshrss:/config
-    networks:
-      - proxy
     restart: unless-stopped
     networks:
       - proxy
