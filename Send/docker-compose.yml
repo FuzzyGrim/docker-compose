@@ -29,17 +29,11 @@ services:
 
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.send.entrypoints=http"
+      - "traefik.http.routers.send.entrypoints=https"
       - "traefik.http.routers.send.rule=Host(`send.domain.com`)"
-      - "traefik.http.middlewares.send-https-redirect.redirectscheme.scheme=https"
-      - "traefik.http.routers.send.middlewares=send-https-redirect"
-      - "traefik.http.routers.send-secure.entrypoints=https"
-      - "traefik.http.routers.send-secure.rule=Host(`send.domain.com`)"
-      - "traefik.http.routers.send-secure.tls=true"
-      - "traefik.http.routers.send-secure.service=send"
+      - "traefik.http.routers.send.tls=true"
       - "traefik.http.services.send.loadbalancer.server.port=1234"
-      - "traefik.docker.network=proxy"
-      - "traefik.http.routers.send-secure.middlewares=authelia@docker"
+      - "traefik.http.routers.send.middlewares=authelia@docker"
 
   redis:
     container_name: send-redis

@@ -31,17 +31,11 @@ services:
       - invidious-db
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.invidious.entrypoints=http"
+      - "traefik.http.routers.invidious.entrypoints=https"
       - "traefik.http.routers.invidious.rule=Host(`invidious.domain.com`)"
-      - "traefik.http.middlewares.invidious-https-redirect.redirectscheme.scheme=https"
-      - "traefik.http.routers.invidious.middlewares=invidious-https-redirect"
-      - "traefik.http.routers.invidious-secure.entrypoints=https"
-      - "traefik.http.routers.invidious-secure.rule=Host(`invidious.domain.com`)"
-      - "traefik.http.routers.invidious-secure.tls=true"
-      - "traefik.http.routers.invidious-secure.service=invidious"
+      - "traefik.http.routers.invidious.tls=true"
       - "traefik.http.services.invidious.loadbalancer.server.port=3000"
-      - "traefik.docker.network=proxy"
-      - "traefik.http.routers.invidious-secure.middlewares=authelia@docker"
+      - "traefik.http.routers.invidious.middlewares=authelia@docker"
 
   invidious-db:
     image: docker.io/library/postgres:14
