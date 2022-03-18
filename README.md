@@ -32,6 +32,7 @@ Services:
 - Nextcloud
 - Piped
 - Send
+- Shiori
 - Traefik
 - Vaultwarden
 - Watchtower
