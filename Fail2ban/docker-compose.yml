@@ -13,6 +13,6 @@ services:
       - "/data/authelia/log:/var/log/authelia:ro"
       - "/data/nextcloud/nextcloud.log:/var/log/nextcloud/nextcloud.log:ro"
       - "/data/vaultwarden/vaultwarden.log:/var/log/vaultwarden/vaultwarden.log:ro"
-      - "/var/lib/docker/containers/id/id-json.log:/var/log/navidrome/navidrome.log:ro"
+      - "/data/navidrome/navidrome.log:/var/log/navidrome/navidrome.log:ro"
       - "/var/log/traefik:/var/log/traefik/:ro"
     restart: always
