@@ -3,8 +3,6 @@ services:
   shiori:
     image: radhifadlillah/shiori:latest
     container_name: shiori
-    ports:
-      - "8080:8080"
     volumes:
       - ./:/srv/shiori
     restart: unless-stopped
