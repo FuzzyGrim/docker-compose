@@ -14,6 +14,7 @@ services:
     restart: unless-stopped
     depends_on:
       - db
+      - redis
     networks:
       - proxy
       - default
@@ -26,7 +27,10 @@ services:
       - "traefik.http.middlewares.nextcloud-dav.redirectregex.regex=https://(.*)/.well-known/(card|cal)dav"
       - "traefik.http.middlewares.nextcloud-dav.redirectregex.replacement=https://$$1/remote.php/dav/"
       - "traefik.http.middlewares.nextcloud-dav.redirectregex.permanent=true"
-
+      - "traefik.http.middlewares.nc-header.headers.stsSeconds=31536000"
+      - "traefik.http.middlewares.nextcloud-wellknown.replacepathregex.regex=^(/.well-known.*)"
+      - "traefik.http.middlewares.nextcloud-wellknown.replacepathregex.replacement=/index.php$${1}"
+      - "traefik.http.routers.nextcloud.middlewares=nextcloud-dav,nc-header, nextcloud-wellknown"
   db:
     image: linuxserver/mariadb:latest
     container_name: nextcloud_db
@@ -43,6 +47,14 @@ services:
     restart: unless-stopped
     networks:
       - default
+
+  redis:
+    container_name: nextcloud-redis
+    networks:
+      - default
+    image: 'redis:latest'
+    restart: always
+
 networks:
   proxy:
     external: true
