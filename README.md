@@ -31,6 +31,7 @@ Services:
 - Navidrome
 - Nextcloud
 - Piped
+- Portainer
 - Send
 - Shiori
 - Traefik
