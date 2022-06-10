@@ -1,0 +1,19 @@
+# Portainer
+
+```yml
+version: '3.3'
+services:
+  portainer-ce:
+    ports:
+      - '8000:8000'
+      - '9000:9000'
+    container_name: portainer
+    restart: always
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - 'portainer_data:/data'
+    image: 'portainer/portainer-ce:latest'
+
+volumes:
+  portainer_data:
+```
