@@ -1,16 +1,22 @@
 # docker-compose
 
-Services:
+This repository will serve as documentation for my self-hosted services, it is not intended as a guide for other users, but feel free to use it as a template if you find it useful.
+
+## Services
 
 - Authelia
 - Bookstack
 - Caddy
+- Changedetection
 - Code-Server
+- Commentoplusplus
 - Dashy
 - Duplicati
 - Fail2ban
 - FileBrowser
+- Fireflyiii
 - FreshRSS
+- Home Assistant
 - Invidious
 - Libreddit
 - LibreSpeed
@@ -30,11 +36,14 @@ Services:
     - Promtail
 - Navidrome
 - Nextcloud
+- Pigallery2
 - Piped
 - Portainer
 - Send
 - Shiori
 - Traefik
+- Umami
+- Uptime Kuma
 - Vaultwarden
-- Watchtower
 - Wallabag
+- Watchtower
