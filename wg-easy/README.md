@@ -5,14 +5,15 @@ version: "3.8"
 services:
   wg-easy:
     environment:
-      - WG_HOST=subdomain.duckdns.org
+      - WG_HOST=domain.duckdns.org
+      - WG_PORT=4500
 
     image: weejewel/wg-easy
     container_name: wg-easy
     volumes:
-      - .:/etc/wireguard
+      - ./config:/etc/wireguard
     ports:
-      - "51820:51820/udp"
+      - "4500:51820/udp"
       - "51821:51821/tcp"
     restart: unless-stopped
     cap_add:
