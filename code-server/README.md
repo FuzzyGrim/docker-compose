@@ -1,6 +1,7 @@
 # Code Server
 
 ## Docker Compose
+
 ```yml
 version: "2.1"
 services:
@@ -17,6 +18,7 @@ services:
       - DEFAULT_WORKSPACE=/config/workspace #optional
     volumes:
       - ./config:/config
+      - ./scripts:/custom-cont-init.d:ro
     restart: unless-stopped
     networks:
       - proxy
@@ -30,4 +32,14 @@ services:
 networks:
   proxy:
     external: true
+```
+
+## Script
+
+```bash
+#!/bin/bash
+
+sudo apt-get update
+
+apt install -y openjdk-17-jdk openjdk-17-jre
 ```
