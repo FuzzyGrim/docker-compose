@@ -26,6 +26,6 @@ services:
 
 If you are using Proxmox's LXC, edit `/etc/pve/lxc/<id>.conf` and add:
 
-```
+```bash
 lxc.cap.drop:
 ```
