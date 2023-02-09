@@ -1,5 +1,7 @@
 # Minecraft Server
 
+## Minecraft server docker image
+
 ```yml
 version: "3"
 
@@ -19,6 +21,8 @@ services:
     volumes:
       - ./data:/data
 ```
+
+## Lightweight proxy for Minecraft Java server
 
 ```yml
 version: '3.4'
