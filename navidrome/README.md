@@ -1,8 +1,9 @@
 # Navidrome
 
-### Remember to create the folder /data/navidrome first with user 1000.
+Remember to create the folder /data/navidrome first with user 1000.
 
 ## Docker Compose
+
 ```yml
 version: "3"
 services:
@@ -22,7 +23,7 @@ services:
       - "traefik.http.routers.navidrome.rule=Host(`navidrome.domain.com`)"
       - "traefik.http.routers.navidrome.tls=true"
     entrypoint: /bin/sh -c "/app/navidrome &> /data/navidrome.log"
-	
+
 networks:
   proxy:
     external: true
