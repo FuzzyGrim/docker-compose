@@ -15,11 +15,16 @@ services:
       EULA: "TRUE"
       TYPE: "FORGE"
       DIFFICULTY: "normal"
+      VERSION: "1.19.2"
+      FORGE_VERSION: "43.2.0"
+      MEMORY: "8G"
     tty: true
     stdin_open: true
     restart: unless-stopped
     volumes:
       - ./data:/data
+      - ./mods:/mods
+      - /etc/timezone:/etc/timezone
 ```
 
 ## Lightweight proxy for Minecraft Java server
