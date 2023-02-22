@@ -137,6 +137,9 @@ opcache.save_comments=1
 opcache.revalidate_freq=1
 ```
 
+## Remove mail server warning
+Set default mail on `Personal info`, then go to `Administration > Basic settings` and change “Send Mode” to “Sendmail”, “Sendmail mode” to “pipe (-t)”, leave “From address” emty and hit “Send email”.
+
 ## Backup
 First create folder /data/nextcloud/db_bak, then `crontab -e`
 ```
