@@ -130,7 +130,7 @@ Add to :`www/nextcloud/config/config.php`
 Add to: `config/php/php-local.ini`
 ```
 opcache.enable=1
-opcache.interned_strings_buffer=8
+opcache.interned_strings_buffer=10
 opcache.max_accelerated_files=10000
 opcache.memory_consumption=128
 opcache.save_comments=1
