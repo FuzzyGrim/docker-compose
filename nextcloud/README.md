@@ -27,14 +27,10 @@ services:
       - "traefik.http.routers.nextcloud.entrypoints=https"
       - "traefik.http.routers.nextcloud.rule=Host(`nextcloud.domain.com`)"
       - "traefik.http.routers.nextcloud.tls=true"
-      - "traefik.http.services.nextcloud.loadbalancer.server.port=80"
-      - "traefik.http.middlewares.nextcloud-dav.redirectregex.regex=https://(.*)/.well-known/(card|cal)dav"
-      - "traefik.http.middlewares.nextcloud-dav.redirectregex.replacement=https://$$1/remote.php/dav/"
-      - "traefik.http.middlewares.nextcloud-dav.redirectregex.permanent=true"
+      - "traefik.http.services.nextcloud.loadbalancer.server.port=443"
+      - "traefik.http.services.nextcloud.loadbalancer.server.scheme=https"
       - "traefik.http.middlewares.nc-header.headers.stsSeconds=31536000"
-      - "traefik.http.middlewares.nextcloud-wellknown.replacepathregex.regex=^(/.well-known.*)"
-      - "traefik.http.middlewares.nextcloud-wellknown.replacepathregex.replacement=/index.php$${1}"
-      - "traefik.http.routers.nextcloud.middlewares=nextcloud-dav,nc-header, nextcloud-wellknown"
+      - "traefik.http.routers.nextcloud.middlewares=nc-header"
 
   db:
     image: linuxserver/mariadb:latest
@@ -65,19 +61,6 @@ networks:
     external: true
 ```
 
-## Fix traefik
-`vim /data/nextcloud/config/nginx/site-confs/default`
-
-Delete lines 6-12
-```bash
-    listen [::]:80;
-    server_name _;
-    return 301 https://$host$request_uri;
-}
-server {
-    listen 443 ssl http2;
-    listen [::]:443 ssl http2;
-```
 
 # Set up
 Go to your Nextcloud's URL, select MySQL and use `db` as URL for database. Password is `${DB_PW}`
