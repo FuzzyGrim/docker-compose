@@ -11,7 +11,7 @@ services:
       - PGID=1000
       - TZ=Europe/Madrid
     volumes:
-      - ./config:/config
+      - /data/duplicati:/config
       - /backup:/backups
       - /data:/source
     ports:
