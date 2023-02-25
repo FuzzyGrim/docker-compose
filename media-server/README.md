@@ -12,7 +12,7 @@ services:
       - PGID=1000
       - TZ=Europe/Madrid
     volumes:
-      - ./jellyfin_config:/config
+      - ./jellyfin:/config
       - /data/media/tvshows:/data/tvshows
       - /data/media/movies:/data/movies
       - /data/media/anime:/data/anime
@@ -30,7 +30,7 @@ services:
       - PGID=1000
       - TZ=Europe/Madrid
     volumes:
-      - ./sonarr_config:/config
+      - ./sonarr:/config
       - /data/media/anime:/anime
       - /data/media/tvshows:/tvshows
       - /data/transmission/downloads/complete:/downloads/complete
@@ -46,7 +46,7 @@ services:
       - PGID=1000
       - TZ=Europe/Madrid
     volumes:
-      - ./radarr_config:/config
+      - ./radarr:/config
       - /data/transmission/downloads/complete:/downloads/complete
       - /data/media/movies:/movies
     ports:
@@ -61,7 +61,7 @@ services:
       - PGID=1000
       - TZ=Europe/Madrid
     volumes:
-      - ./ombi_config:/config
+      - ./ombi:/config
     ports:
       - 3579:3579
     restart: unless-stopped
