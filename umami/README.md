@@ -47,7 +47,6 @@ networks:
     external: true
 ```
 
-
 ## Backup
 
 `0 21 * * * docker exec umami-db pg_dump -h localhost -U umami umami > /home/user/docker/umami/backups/umami_$(date '+\%Y-\%m-\%d').sql`
