@@ -1,6 +1,6 @@
 # Firefly III
 
-## Docker-compose (Change MYSQL_DATABASE)
+## Docker-compose
 
 ```yml
 version: '3.3'
@@ -50,9 +50,10 @@ Then edit the following variables:
 - APP_KEY
 - DEFAULT_LOCALE
 - TZ
+- DB_USERNAME
 - DB_PASSWORD
 
-## .fidi.env (Change FIREFLY_III_URL, TZ, FIREFLY_III_ACCESS_TOKEN)
+## .fidi.env
 
 Download the example env file from: [https://raw.githubusercontent.com/firefly-iii/data-importer/main/.env.example](https://raw.githubusercontent.com/firefly-iii/data-importer/main/.env.example) and rename it to `.fidi.env`.
 
