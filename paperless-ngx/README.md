@@ -70,3 +70,7 @@ services:
     image: ghcr.io/paperless-ngx/tika:latest
     restart: unless-stopped
 ```
+
+## Backup
+
+`0 15 * * * docker exec paperless_db pg_dump -h localhost -U paperless paperless > /data/paperless/backups/paperless_$(date '+\%Y-\%m-\%d').sql`
