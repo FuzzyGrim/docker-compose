@@ -1,6 +1,7 @@
 # Nextcloud
 
 ## docker-compose.yml
+
 ```yml
 version: "3.7"
 
@@ -55,21 +56,36 @@ services:
       - default
     image: 'redis:latest'
     restart: always
+    volumes:
+      - nc-redis:/data
+
+volumes:
+  nc-redis:
 
 networks:
   proxy:
     external: true
 ```
 
+## Set up
 
-# Set up
 Go to your Nextcloud's URL, select MySQL and use `db` as URL for database. Password is `${DB_PW}`
 
-## Add a new trusted domain
+### Set datadirectory
+
+Add to `config/config.php`, usually `/data/nextcloud/config/www/nextcloud/config/config.php`.
+
+```php
+  'datadirectory' => '/data',
+```
+
+### Add a new trusted domain
+
 Go to `config/config.php`, usually `/data/nextcloud/config/www/nextcloud/config/config.php`.
 
 Initial config:
-```
+
+```php
   'trusted_domains' =>
   array (
     0 => '192.168.1.126:9443',
@@ -77,7 +93,8 @@ Initial config:
 ```
 
 To add a new domain just add new entries by appending a new item to the PHP array:
-```
+
+```php
   'trusted_domains' =>
   array (
     0 => '192.168.1.126:9443',
@@ -86,7 +103,9 @@ To add a new domain just add new entries by appending a new item to the PHP arra
 ```
 
 To add redis:
-```
+
+```php
+  'memcache.local' => '\\OC\\Memcache\\APCu',
   'memcache.locking' => '\\OC\\Memcache\\Redis',
   'memcache.distributed' => '\\OC\Memcache\\Redis',
   'redis' =>
@@ -99,16 +118,21 @@ To add redis:
 
 `docker exec nextcloud-redis redis-cli monitor` should display something if redis is working.
 
-Remove password reset:
+### Remove password reset
+
 Add to :`vim www/nextcloud/config/config.php`
-```
-'lost_password_link' => 'disabled',
-'auth.webauthn.enabled' => false, 
+
+```php
+  'lost_password_link' => 'disabled',
+  'auth.webauthn.enabled' => false, 
 ```
 
-## Fix X_Forwarded_For
-Go to `config/config.php`, usually `/data/nextcloud/config/www/nextcloud/config/config.php`. Change `192.168.16.0/24`, with traefik's docker network, use: `docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' traefik`.
-```
+### Fix X_Forwarded_For
+
+Go to `config/config.php`, usually `/data/nextcloud/config/www/nextcloud/config/config.php`.
+Change `192.168.16.0/24`, with traefik's docker network, use: `docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' traefik`.
+
+```php
   'trusted_domains' =>
   array (
     0 => 'nextcloud.domain.com',
@@ -120,28 +144,65 @@ Go to `config/config.php`, usually `/data/nextcloud/config/www/nextcloud/config/
   'forwarded_for_headers' => array('HTTP_X_FORWARDED_FOR'),
 ```
 
-## Fix region error
+### Filesystemcheck
+
+For Nextcloud to check changes on file system:
+
+```php
+  'filesystem_check_changes' => 1,
+```
+
+### Memories app
+
+[Support for high resolution images](https://github.com/pulsejet/memories/wiki/Configuration#imagevideo-support)
+
+```php
+  'preview_max_memory' => 4096,
+  'preview_max_filesize_image' => 256,
+```
+
+### Fix region error
+
 Add to :`www/nextcloud/config/config.php`
-```
-'default_phone_region' => 'ES',
+
+```php
+  'default_phone_region' => 'ES',
 ```
 
-## Enable OPCache
+### Enable OPCache
+
 Add to: `config/php/php-local.ini`
-```
-opcache.enable=1
-opcache.interned_strings_buffer=10
-opcache.max_accelerated_files=10000
-opcache.memory_consumption=128
-opcache.save_comments=1
-opcache.revalidate_freq=1
+
+```php
+  opcache.enable=1
+  opcache.interned_strings_buffer=10
+  opcache.max_accelerated_files=10000
+  opcache.memory_consumption=128
+  opcache.save_comments=1
+  opcache.revalidate_freq=1
 ```
 
-## Remove mail server warning
-Set default mail on `Personal info`, then go to `Administration > Basic settings` and change “Send Mode” to “Sendmail”, “Sendmail mode” to “pipe (-t)”, leave “From address” emty and hit “Send email”.
+### Remove mail server warning
+
+Two methods:
+
+#### CLI
+
+Add to: `config/php/php-local.ini`
+
+```php
+  'mail_smtpmode' => 'sendmail',
+  'mail_sendmailmode' => 'pipe',
+```
+
+#### GUI
+
+Set default mail on `Personal info > Administration > Basic settings` and change “Send Mode” to “Sendmail”, “Sendmail mode” to “pipe (-t)”, leave “From address” emty and hit “Send email”.
 
 ## Backup
+
 First create folder /data/nextcloud/db_bak, then `crontab -e`
+
 ```
 0 14 * * * docker exec nextcloud occ maintenance:mode --on && docker exec nextcloud_db mysqldump --single-transaction -h localhost -u ${DB_USER} -p${DB_PW} nextcloud > /data/nextcloud/db_bak/nextcloud-`date +"\%Y-\%m-\%d"`.sql && docker exec nextcloud occ maintenance:mode --off
 ```
