@@ -1,6 +1,7 @@
 # Media Server
 
 ## Docker compose of Jellyfin, Sonarr, Radarr, Ombi and Bazarr
+
 ```yml
 version: "3"
 services:
@@ -84,7 +85,7 @@ services:
     ports:
       - 6767:6767
     restart: unless-stopped
-```ind
+```
 
 ## Docker compose of Prowlarr and Transmission
 
@@ -103,6 +104,7 @@ services:
       - WIREGUARD_PRESHARED_KEY=${PRESHARED_KEY}
       - SERVER_REGIONS=Spain
       - SERVER_CITIES=Madrid
+      - FIREWALL_OUTBOUND_SUBNETS=192.168.1.0/24
     ports:
       - 9696:9696 # prowlarr
       - 9091:9091 # transmission
