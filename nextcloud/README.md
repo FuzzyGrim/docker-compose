@@ -182,6 +182,27 @@ Add to: `config/php/php-local.ini`
   opcache.revalidate_freq=1
 ```
 
+### INotify
+
+To install the INotify file watcher app, manually create `/config/scripts` folder on the docker container and add this script:
+
+```
+#!/bin/bash
+
+apk update &&\
+apk add --no-cache autoconf automake file g++ gcc make php81-dev php81-pear re2c zlib-dev inotify-tools &&\
+wget -O /config/scripts/inotify-3.0.0.tgz https://pecl.php.net/get/inotify-3.0.0.tgz &&\
+pear81 install /config/scripts/inotify-3.0.0.tgz &&\
+echo "extension="inotify.so"" > /etc/php81/conf.d/00_inotify.ini &&\
+apk del --purge &&\
+occ app:install files_inotify
+```
+
+Remember to bind the folder to `/custom-cont-init.d:ro`, for example, add:
+```
+- /data/nextcloud/scripts:/custom-cont-init.d:ro
+```
+
 ### Remove mail server warning
 
 Two methods:
