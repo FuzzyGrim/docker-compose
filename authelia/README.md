@@ -3,6 +3,7 @@
 Check my [guide](https://www.fuzzygrim.com/posts/exposing-services) on how to setup Authelia with Traefik.
 
 ## Docker-compose
+
 ```yml
 version: '3'
 
@@ -38,6 +39,7 @@ networks:
 ```
 
 ## configuration.yml
+
 ```yml
 ---
 ###############################################################
@@ -106,6 +108,7 @@ notifier:
 ```
 
 ## users_database.yml
+
 ```yml
 ---
 ###############################################################

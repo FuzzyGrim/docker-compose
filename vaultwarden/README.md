@@ -32,10 +32,8 @@ networks:
     external: true
 ```
 
-## Start
-`docker-compose up -d`
-
 ## Backup
+
 Add to `crontab -e`
 ```
 sqlite3 /data/vaultwarden/db.sqlite3 ".backup '/data/vaultwarden/db_bak/db-$(date '+\%Y-\%m-\%d').sqlite3'"

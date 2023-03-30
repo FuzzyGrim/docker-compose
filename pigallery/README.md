@@ -33,6 +33,7 @@ networks:
 ```
 
 ## Config
+
 To allow [public browsing](https://github.com/bpatrik/pigallery2/issues/60) :
  - Disable password protection from GUI.
  - Manually edit config.json and set unAuthenticatedUserRole to a different value (Admin to User).

@@ -1,4 +1,5 @@
 # Duck DNS
+
 ```yml
 version: "2.1"
 services:

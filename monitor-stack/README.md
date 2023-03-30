@@ -1,10 +1,12 @@
 # Monitoring Stack
+
 ```bash
 mkdir -p monitoring/{grafana,loki,promtail,prometheus}
 vim ~/docker/monitor/docker-compose.yml
 ```
 
 ## ./grafana/docker-compose.yml
+
 ```yml
 version: "3"
 services:
@@ -55,6 +57,7 @@ services:
 ```
 
 ## ./loki/loki-config.yml
+
 ```yml
 auth_enabled: false
 
@@ -108,6 +111,7 @@ Check it is installed with `docker plugin ls`
 Restart docker daemon: ```sudo systemctl restart docker```, you will also need to recreate the services you want logs or wait for next reboot.
 
 ## Promtail
+
 CHANGE PROMTAIL CONFIG TO:
 
 `vim ./promtail/promtail-config.yml`
@@ -162,6 +166,7 @@ Restart docker daemon: `sudo systemctl restart docker`.
 You will also need to recreate the containers.
 
 ## LogQL sample queries
+
 Query all logs from the `varlogs` stream
 ```
 {job="varlogs"}
@@ -176,7 +181,9 @@ Query all logs from the `container_name` label of `uptime-kuma` and filter on `h
 ```
 
 ## Netdata
+
 ### Docker Compose
+
 `bash <(curl -Ss https://my-netdata.io/kickstart.sh)`
 
 Check [http://192.168.1.126:19999](http://192.168.1.126:19999)
@@ -186,10 +193,13 @@ Check [http://192.168.1.126:19999](http://192.168.1.126:19999)
 Restart netdata with:
 1. `sudo systemctl stop netdata`
 2. `sudo systemctl start netdata`
+
 ### Delete netdata
+
 Script located at: `/usr/libexec/netdata/netdata-uninstaleler.sh`
 
 ## Prometheus
+
 `vim ./prometheus/prometheus.yml`
 ```yml
 # my global config
@@ -254,7 +264,6 @@ Once saved the config, restart the prometheus service.
 
 `docker-compose up -d --force-recreate # be sure you've created promtail-config.yml and loki-config.yml before running this`
 
-
 ## Grafana config
 Now:
 1. Wait until [http://192.168.1.122:3100/ready](http://192.168.1.122:3100/ready) shows ready, 
@@ -317,6 +326,7 @@ Create another one but instead of Stat, use Time Series and name it CPU Usage Fl
 - Thresholds > Show thresholds > As filled regions and lines
 
 ### Memory Used
+
 Search `netdata_system_ram_MiB_average`
 Select used, e.g:
 ```
@@ -328,7 +338,9 @@ Also add another panel with:
 ```
 netdata_system_ram_MiB_average{chart="system.ram", dimension="free", family="ram", instance="192.168.1.126:19999", job="storage-netdata"}
 ```
+
 ### Hard drive space
+
 Search `netdata_disk_space_GiB_average`
 We will add:
 ```

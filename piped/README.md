@@ -11,6 +11,7 @@ Then, run `./configure-instance.sh` and fill in the hostnames when asked. Choose
 The hostnames I have chosen: `piped`, `pipedapi`, `pipedproxy`.
 
 ## Docker compose (Change domain and POSTGRES_PASSWORD)
+
 ```yml
 services:
     pipedfrontend:

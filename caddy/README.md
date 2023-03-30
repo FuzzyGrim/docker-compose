@@ -17,6 +17,7 @@ Create an API token for the DNS challenge:
 7. Create the token and copy the token value.
 
 ## Docker Compose
+
 ```yml
 version: '3'
 
@@ -77,3 +78,4 @@ domain:443 {
   reverse_proxy 192.168.1.126:6875
 }
 ```
+
