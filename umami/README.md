@@ -17,7 +17,7 @@ services:
       - DATABASE_TYPE=postgresql
       - HASH_SALT=${SALT}
       - REMOVE_TRAILING_SLASH=1
-      - TRACKER_SCRIPT_NAME=whatever
+      - TRACKER_SCRIPT_NAME=${SCRIPT}
     depends_on:
       - db
     restart: unless-stopped
