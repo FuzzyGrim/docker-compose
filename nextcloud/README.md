@@ -190,10 +190,10 @@ To install the INotify file watcher app, manually create `/config/scripts` folde
 #!/bin/bash
 
 apk update &&\
-apk add --no-cache autoconf automake file g++ gcc make php81-dev php81-pear re2c zlib-dev inotify-tools &&\
+apk add --no-cache autoconf automake file g++ gcc make php82-dev php82-pear re2c zlib-dev inotify-tools &&\
 wget -O /config/scripts/inotify-3.0.0.tgz https://pecl.php.net/get/inotify-3.0.0.tgz &&\
-pear81 install /config/scripts/inotify-3.0.0.tgz &&\
-echo "extension="inotify.so"" > /etc/php81/conf.d/00_inotify.ini &&\
+pear82 install /config/scripts/inotify-3.0.0.tgz &&\
+echo "extension="inotify.so"" > /etc/php82/conf.d/00_inotify.ini &&\
 apk del --purge &&\
 occ app:install files_inotify
 ```
