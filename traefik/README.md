@@ -121,9 +121,25 @@ certificatesResolvers:
         resolvers:
           - "1.1.1.1:53"
           - "1.0.0.1:53"
+
 log:
-  level: "INFO"
+  level: "ERROR"
   filePath: "/var/log/traefik/traefik.log"
 accessLog:
   filePath: "/var/log/traefik/access.log"
+  filters:
+    statusCodes:
+      - "500"
+      - "403"
 ```
+
+
+## Fail2Ban samples
+
+### FreshRSS
+[Definition]
+failregex = ^<HOST> \- \S+ \[\] "POST .*c=auth&a=login HTTP\/1\.1" 403 \d+ "-" "-" \d+ "freshrss@docker" .+$
+
+### Shiori
+tion]
+failregex = ^<HOST> \- \S+ \[\] "POST \/api\/login HTTP\/1\.1" 500 \d+ "-" "-" \d+ "shiori@docker" .+$
