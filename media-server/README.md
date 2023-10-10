@@ -1,6 +1,6 @@
 # Media Server
 
-## Docker compose of Jellyfin, Sonarr, Radarr, Ombi and Bazarr
+## Docker compose of Jellyfin, Sonarr, Radarr, Jellyseer and Bazarr
 
 ```yml
 version: "3"
@@ -54,17 +54,16 @@ services:
       - 7878:7878
     restart: unless-stopped
 
-  ombi:
-    image: linuxserver/ombi
-    container_name: ombi
+  jellyseerr:
+    image: fallenbagel/jellyseerr:latest
+    container_name: jellyseerr
+    user: 1000:1000
     environment:
-      - PUID=1000
-      - PGID=1000
       - TZ=Europe/Madrid
-    volumes:
-      - ./ombi:/config
     ports:
-      - 3579:3579
+      - 5055:5055
+    volumes:
+      - ./jellyseer_config:/app/config
     restart: unless-stopped
     depends_on:
       - radarr
