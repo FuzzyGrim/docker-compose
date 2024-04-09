@@ -102,7 +102,7 @@ To add a new domain just add new entries by appending a new item to the PHP arra
   ),
 ```
 
-To add redis:
+### To add redis:
 
 ```php
   'memcache.local' => '\\OC\\Memcache\\APCu',
