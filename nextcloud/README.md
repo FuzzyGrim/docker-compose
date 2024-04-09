@@ -199,6 +199,15 @@ Add to: `config/php/php-local.ini`
 
 Set default mail on `Personal info > Administration > Basic settings` and change “Send Mode” to “Sendmail”, “Sendmail mode” to “pipe (-t)”, leave “From address” emty and hit “Send email”.
 
+### Remove Server has no maintenance window start time warning
+
+Add to: `config/php/php-local.ini`
+```php
+  'maintenance_window_start' => 1,
+```
+
+A value of 1 e.g. will only run these background jobs between 01:00am UTC and 05:00am UTC:
+
 ## Backup
 
 First create folder /data/nextcloud/db_bak, then `crontab -e`
