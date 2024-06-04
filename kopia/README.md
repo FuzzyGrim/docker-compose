@@ -20,6 +20,7 @@ services:
             - ./logs:/app/logs
             - /data:/app/data:ro
             - /backup:/app/backup
+            - ./export:/export
         command:
             - server
             - start
