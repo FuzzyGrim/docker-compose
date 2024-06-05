@@ -206,7 +206,34 @@ Add to: `config/php/php-local.ini`
   'maintenance_window_start' => 1,
 ```
 
-A value of 1 e.g. will only run these background jobs between 01:00am UTC and 05:00am UTC:
+A value of 1 e.g. will only run these background jobs between 01:00am UTC and 05:00am UTC.
+
+### Change log level
+
+You can change your log level with:
+```php
+'loglevel' => 3,
+```
+
+0: DEBUG: All activity; the most detailed logging.
+
+1: INFO: Activity such as user logins and file activities, plus warnings, errors, and fatal errors.
+
+2: WARN: Operations succeed, but with warnings of potential problems, plus errors and fatal errors.
+
+3: ERROR: An operation fails, but other services and operations continue, plus fatal errors.
+
+4: FATAL: The server stops.
+
+### Auto clean trash bin
+
+You can edit your trash bin clean up interval:
+
+```php
+'trashbin_retention_obligation' => '30, 90',
+```
+
+This will keep files and folders in the trash bin for at least 30 days and delete when exceeds 90 days.
 
 ## Backup
 
